@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>    
+    <meta charset="UTF-8">    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    <link rel="stylesheet" href="./style.css">    
+    <title>My Project</title>
+</head>
+<body>
+    <div class="page">
+        <img id="pageImage" src="./page1.jpg" alt="Page 1">
+        
+        <!-- ENTER صفحه اول -->        
+        <button class="next-btn" onclick="nextPage()"></button>
+        
+        <!-- لینکای صفحه دوم -->       
+        <button class="about-btn" onclick="goToPage(3)"></button>
+        <button class="characters-btn" onclick="goToPage(4)"></button>
+        <button class="preorder-btn" onclick="goToPage(5)"></button>
+        <button class="tracklist-btn" onclick="goToPage(6)"></button>
+
+        <button class="back-btn" onclick="goToPage(2)"></button>
+        <button class="back-btn-page4" onclick="goToPage(2)"></button>
+
+        <!-- دکمه BACK صفحه ۵ (Pre-order) -->
+        <button class="back-btn-page5" onclick="goToPage(2)"></button>
+
+        <!-- دکمه تلگرام صفحه ۵ (Pre-order) -->
+        <button class="telegram-btn" onclick="window.open('https://t.me/IR_komy', '_blank')"></button>
+
+        <!-- دکمه BACK صفحه ۶ (Tracklist) -->
+        <button class="back-btn-page6" onclick="goToPage(2)"></button>
+    </div>
+
+<script>
+let currentPage = 1;
+const totalPages = 6;
+
+function nextPage() {
+    if (currentPage < totalPages) {
+        currentPage++;
+        updatePage();
+    }
+}
+
+function goToPage(pageNumber) {
+    currentPage = pageNumber;
+    updatePage();
+}
+
+function updatePage() {
+    const image = document.getElementById("pageImage");
+
+    // همه دکمه‌ها مخفی
+    document.querySelector(".next-btn").style.display = "none";
+    document.querySelector(".about-btn").style.display = "none";
+    document.querySelector(".characters-btn").style.display = "none";
+    document.querySelector(".preorder-btn").style.display = "none";
+    document.querySelector(".back-btn").style.display = "none";
+    document.querySelector(".back-btn-page4").style.display = "none";
+    document.querySelector(".tracklist-btn").style.display = "none";
+    document.querySelector(".telegram-btn").style.display = "none";
+    document.querySelector(".back-btn-page5").style.display = "none"; // مخفی کردن دکمه بک صفحه ۵
+    document.querySelector(".back-btn-page6").style.display = "none"; // مخفی کردن دکمه بک صفحه ۶
+
+    // تغییر عکس
+    image.src = "./page" + currentPage + ".jpg";
+
+    // =========================
+    // PAGE 1
+    // =========================
+    if (currentPage === 1) {
+        document.querySelector(".next-btn").style.display = "block";
+    }
+
+    // =========================
+    // PAGE 2
+    // =========================
+    if (currentPage === 2) {
+        document.querySelector(".about-btn").style.display = "block";
+        document.querySelector(".characters-btn").style.display = "block";
+        document.querySelector(".preorder-btn").style.display = "block";
+        document.querySelector(".tracklist-btn").style.display = "block";
+
+
+        image.onload = positionButtons;
+
+        if (image.complete) {
+            positionButtons();
+        }
+    }
+
+    // =========================
+    // PAGE 3
+    // =========================
+    if (currentPage === 3) {
+        document.querySelector(".back-btn").style.display = "block";
+
+        image.onload = positionBackButton;
+
+        if (image.complete) {
+            positionBackButton();
+        }
+    }
+
+    // =========================
+    // PAGE 4
+    // =========================
+    if (currentPage === 4) {
+        document.querySelector(".back-btn-page4").style.display = "block";
+
+        image.onload = positionBackButtonPage4;
+
+        if (image.complete) {
+            positionBackButtonPage4();
+        }
+    }
+
+    // =========================
+    // PAGE 5 (PRE-ORDER)
+    // =========================
+    if (currentPage === 5) {
+        document.querySelector(".back-btn-page5").style.display = "block";
+        document.querySelector(".telegram-btn").style.display = "block";
+
+        image.onload = function() {
+            positionBackButtonPage5();
+            positionTelegramButton();
+        };
+
+        if (image.complete) {
+            positionBackButtonPage5();
+            positionTelegramButton();
+        }
+    }
+
+    // =========================
+    // PAGE 6 (TRACKLIST)
+    // =========================
+    if (currentPage === 6) {
+        document.querySelector(".back-btn-page6").style.display = "block";
+
+        image.onload = positionBackButtonPage6;
+
+        if (image.complete) {
+            positionBackButtonPage6();
+        }
+    }
+}
+
+
+// =========================
+// PAGE 2 BUTTONS
+// =========================
+
+function positionButtons() {
+    const image = document.getElementById("pageImage");
+    const rect = image.getBoundingClientRect();
+
+    // ABOUT
+    const about = document.querySelector(".about-btn");
+
+    about.style.left =
+        rect.left + rect.width * 0.057 + "px";
+
+    about.style.top =
+        rect.top + rect.height * 0.189 + "px";
+
+    about.style.width =
+        rect.width * 0.12 + "px";
+
+    about.style.height =
+        rect.height * 0.06 + "px";
+
+
+    // CHARACTERS
+    const characters = document.querySelector(".characters-btn");
+
+    characters.style.left =
+        rect.left + rect.width * 0.057 + "px";
+
+    characters.style.top =
+        rect.top + rect.height * 0.235 + "px";
+
+    characters.style.width =
+        rect.width * 0.16 + "px";
+
+    characters.style.height =
+        rect.height * 0.06 + "px";
+
+
+    // PRE-ORDER
+    const preorder = document.querySelector(".preorder-btn");
+
+    preorder.style.left =
+        rect.left + rect.width * 0.057 + "px";
+
+    preorder.style.top =
+        rect.top + rect.height * 0.335 + "px";
+
+    preorder.style.width =
+        rect.width * 0.15 + "px";
+
+    preorder.style.height =
+        rect.height * 0.06 + "px";
+
+
+    // TRACKLIST
+    const tracklist = document.querySelector(".tracklist-btn");
+
+    tracklist.style.left =
+    rect.left + rect.width * 0.057 + "px";
+
+    tracklist.style.top =
+    rect.top + rect.height * 0.285 + "px";
+
+    tracklist.style.width =
+    rect.width * 0.12 + "px";
+
+    tracklist.style.height =
+    rect.height * 0.06 + "px";
+}
+
+
+
+
+// =========================
+// PAGE 3 BACK BUTTON
+// =========================
+
+function positionBackButton() {
+    const image = document.getElementById("pageImage");
+    const rect = image.getBoundingClientRect();
+
+    const back = document.querySelector(".back-btn");
+
+    back.style.left =
+        rect.left + rect.width * 0.03 + "px";
+
+    back.style.top =
+        rect.top + rect.height * 0.925 + "px";
+
+    back.style.width =
+        rect.width * 0.13 + "px";
+
+    back.style.height =
+        rect.height * 0.055 + "px";
+}
+
+
+// =========================
+// PAGE 4 BACK BUTTON
+// =========================
+
+function positionBackButtonPage4() {
+    const image = document.getElementById("pageImage");
+    const rect = image.getBoundingClientRect();
+
+    const back = document.querySelector(".back-btn-page4");
+
+    back.style.left =
+        rect.left + rect.width * 0.03 + "px";
+
+    back.style.top =
+        rect.top + rect.height * 0.925 + "px";
+
+    back.style.width =
+        rect.width * 0.13 + "px";
+
+    back.style.height =
+        rect.height * 0.055 + "px";
+}
+
+
+// =========================
+// PAGE 5 BACK BUTTON (PRE-ORDER)
+// =========================
+
+function positionBackButtonPage5() {
+    const image = document.getElementById("pageImage");
+    const rect = image.getBoundingClientRect();
+
+    const back = document.querySelector(".back-btn-page5");
+
+    // مختصات دکمه BACK در پایین چپ عکس Pre-order
+    back.style.left =
+        rect.left + rect.width * 0.03 + "px";
+
+    back.style.top =
+        rect.top + rect.height * 0.925 + "px";
+
+    back.style.width =
+        rect.width * 0.13 + "px";
+
+    back.style.height =
+        rect.height * 0.055 + "px";
+}
+
+
+// =========================
+// PAGE 5 TELEGRAM BUTTON
+// =========================
+
+function positionTelegramButton() {
+    const image = document.getElementById("pageImage");
+    const rect = image.getBoundingClientRect();
+
+    const telegram = document.querySelector(".telegram-btn");
+
+    // مختصات دکمه روی متن Telegram: @IR_komy در صفحه ۵
+    telegram.style.left =
+        rect.left + rect.width * 0.55 + "px";
+
+    telegram.style.top =
+        rect.top + rect.height * 0.90 + "px";
+
+    telegram.style.width =
+        rect.width * 0.30 + "px";
+
+    telegram.style.height =
+        rect.height * 0.055 + "px";
+}
+
+
+// =========================
+// PAGE 6 BACK BUTTON (TRACKLIST)
+// =========================
+
+function positionBackButtonPage6() {
+    const image = document.getElementById("pageImage");
+    const rect = image.getBoundingClientRect();
+
+    const back = document.querySelector(".back-btn-page6");
+
+    // مختصات دکمه BACK در پایین چپ عکس Tracklist
+    back.style.left =
+        rect.left + rect.width * 0.03 + "px";
+
+    back.style.top =
+        rect.top + rect.height * 0.925 + "px";
+
+    back.style.width =
+        rect.width * 0.13 + "px";
+
+    back.style.height =
+        rect.height * 0.055 + "px";
+}
+
+
+// =========================
+// RESPONSIVE
+// =========================
+
+window.addEventListener("resize", function () {
+
+    if (currentPage === 2) {
+        positionButtons();
+    }
+
+    if (currentPage === 3) {
+        positionBackButton();
+    }
+
+    if (currentPage === 4) {
+        positionBackButtonPage4();
+    }
+
+    if (currentPage === 5) {
+        positionBackButtonPage5();
+        positionTelegramButton();
+    }
+
+    if (currentPage === 6) {
+        positionBackButtonPage6();
+    }
+
+});
+</script>
+</body>
+</html>
